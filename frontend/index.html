@@ -31,32 +31,32 @@
                         <input v-model="pin" type="password" maxlength="4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         <div class="container">
                             <div class="row mt-5">
-                                <div class="col"><button type="button" class="btn btn-secondary" value="7" @click="buttons(7)">7</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">8</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">9</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(7)">7</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(8)">8</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(9)">9</button></div>
                                 <div class="col"><button type="button" class="btn btn-danger"><i class="fas fa-times"></i> CANCEL</button></div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row mt-5">
-                                <div class="col"><button type="button" class="btn btn-secondary">4</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">5</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">6</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(4)">4</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(5)">5</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(6)">6</button></div>
                                 <div class="col"><button type="button" class="btn btn-warning"><i class="fas fa-angle-left"></i> CLEAR</button></div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row mt-5">
-                                <div class="col"><button type="button" class="btn btn-secondary">1</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">2</button></div>
-                                <div class="col"><button type="button" class="btn btn-secondary">3</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(1)">1</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(2)">2</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(3)">3</button></div>
                                 <div class="col"><button type="button" class="btn btn-success"><i class="far fa-check-circle"></i> ENTER </button></div>
                             </div>
                         </div>
                         <div class="container">
                             <div class="row mt-5">
                                 <div class="col"></div>
-                                <div class="col-3"><button type="button" class="btn btn-secondary">0</button></div>
+                                <div class="col-3"><button type="button" class="btn btn-secondary" @click="buttons(0)">0</button></div>
                                 <div class="col"></div>
                                 <div class="col"></div>
                             </div>
