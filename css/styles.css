@@ -35,3 +35,8 @@ body{
     background-color: #dfdeded2;
 }
 
+.text-secondary{
+    pointer-events: none;
+    display: inline-block;
+
+}
