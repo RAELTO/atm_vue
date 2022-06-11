@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATM</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <h1>XYZ BANK - <span class="spn">ATM</span></h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-12">
+                <div class="card mt-5">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">4 last account digits here</h5>
+                        <input v-model="accountn" type="number" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <h5 class="card-title">PIN</h5>
+                        <input v-model="pin" type="password" maxlength="4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col"><button type="button" class="btn btn-secondary" value="7" @click="buttons(7)">7</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">8</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">9</button></div>
+                                <div class="col"><button type="button" class="btn btn-danger"><i class="fas fa-times"></i> CANCEL</button></div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col"><button type="button" class="btn btn-secondary">4</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">5</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">6</button></div>
+                                <div class="col"><button type="button" class="btn btn-warning"><i class="fas fa-angle-left"></i> CLEAR</button></div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col"><button type="button" class="btn btn-secondary">1</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">2</button></div>
+                                <div class="col"><button type="button" class="btn btn-secondary">3</button></div>
+                                <div class="col"><button type="button" class="btn btn-success"><i class="far fa-check-circle"></i> ENTER </button></div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row mt-5">
+                                <div class="col"></div>
+                                <div class="col-3"><button type="button" class="btn btn-secondary">0</button></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="../backend/js/vue.js"></script>
+<script src="../backend/js/main.js"></script>
+</html>
