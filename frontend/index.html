@@ -17,44 +17,104 @@
 <body>
     <div id="app">
         <div class="row">
-            <div class="col-12 text-center mt-5">
+            <!--<div class="col-12 text-center mt-5">
                 <h1>XYZ BANK - <span class="spn">ATM</span></h1>
-            </div>
+            </div>-->
         </div>
         <div class="container">
             <div class="col-12">
-                <div class="card mt-5">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">4 last account digits here</h5>
-                        <input v-model="accountn" type="number" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                        <h5 class="card-title">PIN</h5>
-                        <input v-model="pin" type="password" maxlength="4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                        <div class="container">
+                <div class="card mt-5 screen">
+                    <div class="card-body text-center mt-5 mb-5">
+                        <div><!--login view-->
+                            <marquee v-if="disp_marq === 1" bgcolor="#000" loop="-1" scrollamount="5" width="100%">---------------------- Welcome to <span class="spn">XYZ BANK ATM</span> ----------------------</marquee>
+                            <h5  v-if="disp_accinp === 1" class="card-title mt-5">4 las numbers of your account:</h5>
+                            <input v-if="disp_accinp === 1" v-model="accountn" @click="acc_input" type="number" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            <h5 v-if="disp_pininp === 1" class="card-title mt-5">PIN</h5>
+                            <input v-if="disp_pininp === 1" v-model="pin" @click="pin_input" type="password" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        </div>
+                        <div v-if="uservw === 1"><!--(user view)-->
+                            <h5 class="account">Account Number: <span>n</span></h5>
+                            <h5 class="account">Balance: <span>0</span></h5>
+                            <h5>Choose an option</h5>
                             <div class="row mt-5">
+                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Consign</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Transfer</button></div>
+                                <div class="col-6 mt-5"><button type="button" class="btn btn-outline-primary">Withdraw</button></div>
+                                <div class="col-6 mt-5"></div>
+                            </div>
+                            <div v-if="consgvw === 1"><!--consign view-->
+                                <h5 class="card-title mt-4">Enter an amount:</h5>
+                                <input type="number" maxlength="4" class="form-control mb-2">
+                            </div>
+                            <div v-if="tfvw === 1"><!--transfer view-->
+                                <h5 class="card-title mt-3">Enter the destination account:</h5>
+                                <input type="text" maxlength="4" class="form-control mb-2">
+                                <h5 class="card-title mt-3">Enter an amount:</h5>
+                                <input type="number" maxlength="4" class="form-control mb-2">
+                            </div>
+                            <div v-if="wdrvw === 1"><!--withdraw view-->
+                                <h5 class="card-title mt-4">Enter an amount:</h5>
+                                <input type="number" maxlength="4" class="form-control mb-2">
+                            </div>
+                        </div>
+                        <div v-if="admvw === 1" class="mt-5"><!--admin view-->
+                            <h1 class="tableTitle">ATM Cash Status</h1>
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr class="text-center">
+                                        <th>Denomination</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="tcash.length" class="table-light">
+                                    <tr v-for="(item, index) in tcash" :key="item.id" class="text-center">
+                                        <td v-text="item.denom"></td>
+                                        <td v-text="item.amount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" class="text-center">Total cash in ATM:</td>
+                                        <td colspan="2" class="text-center ">0</td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else=>
+                                    <tr>
+                                        <td colspan="2" class="text-center">Cash not found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mt-4">
+                    <div class="card-body text-center">
+                        <div class="container">
+                            <div class="row">
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(7)">7</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(8)">8</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(9)">9</button></div>
-                                <div class="col"><button type="button" class="btn btn-danger"><i class="fas fa-times"></i> CANCEL</button></div>
+                                <div class="col"><button type="button" class="btn btn-danger" @click="buttons(11)"><i class="fas fa-times"></i> CANCEL</button></div>
                             </div>
                         </div>
                         <div class="container">
-                            <div class="row mt-5">
+                            <div class="row mt-4">
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(4)">4</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(5)">5</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(6)">6</button></div>
-                                <div class="col"><button type="button" class="btn btn-warning"><i class="fas fa-angle-left"></i> CLEAR</button></div>
+                                <div class="col"><button type="button" class="btn btn-warning" @click="buttons(12)"><i class="fas fa-angle-left"></i> CLEAR</button></div>
                             </div>
                         </div>
                         <div class="container">
-                            <div class="row mt-5">
+                            <div class="row mt-4">
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(1)">1</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(2)">2</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(3)">3</button></div>
-                                <div class="col"><button type="button" class="btn btn-success"><i class="far fa-check-circle"></i> ENTER </button></div>
+                                <div class="col"><button type="button" class="btn btn-success" @click="buttons(10)"><i class="far fa-check-circle"></i> ENTER</button></div>
                             </div>
                         </div>
                         <div class="container">
-                            <div class="row mt-5">
+                            <div class="row mt-4">
                                 <div class="col"><button type="button" class="btn btn-secondary text-secondary">a</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(0)">0</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary text-secondary">b</button></div>

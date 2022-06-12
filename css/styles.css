@@ -7,6 +7,10 @@ body{
     text-shadow: -2px 2px #ccc;
 }
 
+.spn{
+    color: #f3b705;
+}
+
 .row div h1{
     text-shadow: -2px 5px #ccc;
 }
@@ -23,6 +27,7 @@ body{
 .card-body button{
     width: 80%;
     font-weight: bold;
+    font-size: 12px;
 }
 
 .justify{
@@ -30,13 +35,33 @@ body{
 }
 
 .container .card{
-    box-shadow: -5px 10px #ccc;
+    box-shadow: 0px 5px 5px 5px #ccc;
     border-radius: 15px;
     background-color: #dfdeded2;
+    margin: auto;
+}
+
+.container marquee{
+    color: #fff;
+}
+
+.container .screen{
+    background-color: #89b8f3;
+    border: 5px solid #615f5f;
+}
+
+.container .account{
+    text-align: justify;
 }
 
 .text-secondary{
     pointer-events: none;
     display: inline-block;
-
 }
+
+.btn-outline-primary{
+    background-color: #fff;
+}
+
+
+
