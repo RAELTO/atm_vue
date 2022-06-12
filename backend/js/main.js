@@ -19,10 +19,14 @@ var app = new Vue({
         accountn: '',
         click_acc: false,
         click_pin: false,
+        //login 
         disp_marq: 1, //display marquee
         disp_pininp: 0,
         disp_accinp: 1,
+        //users view and components
         uservw: 0,
+        //adminview
+        admvw: 0,
     },
     methods: {
         buttons(n){
@@ -38,9 +42,29 @@ var app = new Vue({
                 this.pin = this.pin;
             }
 
-            if (this.accountn ) {
-                
+            if(n === 11 && this.accountn.length > 0){
+                this.disp_accinp = 0;
+
+                this.disp_pininp = 1;
+                alert();
+            }else{
+
             }
+
+            /*const index = users.findIndex((object, index, users) => {
+                return object.accountn == this.accountn;
+            });
+            
+            if(index != -1){
+                this.disp_pininp = 1;
+            if(pin === users[index].pin){
+                console.log("Valid pin, entering in user view...");
+            }else{
+                console.log("incorrect pin 2 attempts left..")
+            }
+            }else{
+            console.log("The account doesn't exists");
+            }*/
 
         },
         acc_input(){
@@ -53,6 +77,18 @@ var app = new Vue({
         },
         userview(){
             this.uservw = 1;
+        },
+        adminview(){
+            this.admvw = 1;
+        },
+        cancel(){
+            this.uservw = 0;
+            this.admvw = 0;
+            this.disp_marq = 1;
+            this.disp_accinp = 1;
+            this.disp_pininp = 0;
+            this.click_acc = false;
+            this.click_pin = false;
         }
     }
 });

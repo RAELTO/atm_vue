@@ -27,7 +27,7 @@
                     <div class="card-body text-center mt-5 mb-5">
                         <div><!--login view-->
                             <marquee v-if="disp_marq === 1" bgcolor="#000" loop="-1" scrollamount="5" width="100%">---------------------- Welcome to <span class="spn">XYZ BANK ATM</span> ----------------------</marquee>
-                            <h5  v-if="disp_accinp === 1" class="card-title mt-5">4 las numbers of your account:</h5>
+                            <h5  v-if="disp_accinp === 1" class="card-title mt-5">4 last numbers of your account:</h5>
                             <input v-if="disp_accinp === 1" v-model="accountn" @click="acc_input" type="number" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             <h5 v-if="disp_pininp === 1" class="card-title mt-5">PIN</h5>
                             <input v-if="disp_pininp === 1" v-model="pin" @click="pin_input" type="password" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
