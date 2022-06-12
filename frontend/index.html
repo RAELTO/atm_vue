@@ -33,16 +33,16 @@
                             <input v-if="disp_pininp === 1" v-model="pin" @click="pin_input" type="password" maxlength="4" class="form-control mb-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                         </div>
                         <div v-if="uservw === 1"><!--(user view)-->
-                            <h5 class="account">Account Number: <span>n</span></h5>
-                            <h5 class="account">Balance: <span>0</span></h5>
+                            <h5 class="account">Account Number: <span v-text="this.users[pos].accountn">n</span></h5>
+                            <h5 class="account">Balance: <span v-text="this.users[pos].balance">0</span></h5>
                             <h5>Choose an option</h5>
                             <div class="row mt-5">
-                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Consign</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Deposit</button></div>
                                 <div class="col-6"><button type="button" class="btn btn-outline-primary">Transfer</button></div>
                                 <div class="col-6 mt-5"><button type="button" class="btn btn-outline-primary">Withdraw</button></div>
                                 <div class="col-6 mt-5"></div>
                             </div>
-                            <div v-if="consgvw === 1"><!--consign view-->
+                            <div v-if="depovw === 1"><!--consign view-->
                                 <h5 class="card-title mt-4">Enter an amount:</h5>
                                 <input type="number" maxlength="4" class="form-control mb-2">
                             </div>
@@ -94,7 +94,7 @@
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(7)">7</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(8)">8</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(9)">9</button></div>
-                                <div class="col"><button type="button" class="btn btn-danger" @click="buttons(11)"><i class="fas fa-times"></i> CANCEL</button></div>
+                                <div class="col"><button type="button" class="btn btn-danger" @click="cancel"><i class="fas fa-times"></i> CANCEL</button></div>
                             </div>
                         </div>
                         <div class="container">
@@ -110,7 +110,7 @@
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(1)">1</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(2)">2</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(3)">3</button></div>
-                                <div class="col"><button type="button" class="btn btn-success" @click="buttons(10)"><i class="far fa-check-circle"></i> ENTER</button></div>
+                                <div class="col"><button type="button" class="btn btn-success" @click="enter"><i class="far fa-check-circle"></i> ENTER</button></div>
                             </div>
                         </div>
                         <div class="container">

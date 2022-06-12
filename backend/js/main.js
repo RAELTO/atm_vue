@@ -4,10 +4,12 @@ var app = new Vue({
     el: '#app',
     data: {
         users: [
+            {accountn: '1234', pin: '1234', balance: 600000, status: 1},
+            {accountn: '5678', pin: '5678', balance: 1000000, status: 1},
+            {accountn: '9012', pin: '9012', balance: 1400000, status: 1},
+        ],
+        admin: [
             {accountn: '3333', pin: '3333', balance: 0, status: 1},//admin
-            {accountn: '1234', pin: '1234', balance: 0, status: 1},
-            {accountn: '5678', pin: '1234', balance: 0, status: 1},
-            {accountn: '9012', pin: '1234', balance: 0, status: 1},
         ],
         tcash: [
             {denom: 100000, amount: 50},
@@ -25,6 +27,10 @@ var app = new Vue({
         disp_accinp: 1,
         //users view and components
         uservw: 0,
+        depovw: 0,
+        tfvw: 0,
+        wdrvw: 0,
+        pos: 0,
         //adminview
         admvw: 0,
     },
@@ -41,30 +47,6 @@ var app = new Vue({
             }else{
                 this.pin = this.pin;
             }
-
-            if(n === 11 && this.accountn.length > 0){
-                this.disp_accinp = 0;
-
-                this.disp_pininp = 1;
-                alert();
-            }else{
-
-            }
-
-            /*const index = users.findIndex((object, index, users) => {
-                return object.accountn == this.accountn;
-            });
-            
-            if(index != -1){
-                this.disp_pininp = 1;
-            if(pin === users[index].pin){
-                console.log("Valid pin, entering in user view...");
-            }else{
-                console.log("incorrect pin 2 attempts left..")
-            }
-            }else{
-            console.log("The account doesn't exists");
-            }*/
 
         },
         acc_input(){
@@ -89,6 +71,53 @@ var app = new Vue({
             this.disp_pininp = 0;
             this.click_acc = false;
             this.click_pin = false;
-        }
+            this.accountn = '';
+            this.pin = '';
+        },
+        clear(){
+
+        },
+        enter(){
+
+            const index = this.users.findIndex((object, index, users) => {
+                return object.accountn == this.accountn;
+            });
+            
+            if(index != -1 && this.accountn.length > 0){
+                this.disp_pininp = 1;
+                this.disp_accinp = 0;
+                this.accountn = this.accountn;
+                if(this.pin === this.users[index].pin){
+                    this.disp_pininp = 0;
+                    this.click_pin
+                    this.click_pin = false;
+                    this.dis
+                    this.uservw = 1;
+                    this.disp_marq = 0;
+                    this.pos = index;
+                }
+            }else{
+                alert("The account doesn't exists");
+            }
+        },
+        depositvw(){
+
+        },
+        transfervw(){
+
+        },
+        depositvw(){
+
+        },
+        deposit(){
+            
+        },
+        transfer(){
+
+        },
+        withdraw(){
+
+        },
+
     }
 });
