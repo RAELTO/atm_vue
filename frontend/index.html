@@ -36,15 +36,15 @@
                             <h5 class="account">Account Number: <span v-text="this.users[pos].accountn">n</span></h5>
                             <h5 class="account">Balance: <span v-text="this.users[pos].balance">0</span></h5>
                             <h5>Choose an option</h5>
-                            <div class="row mt-5">
-                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Deposit</button></div>
-                                <div class="col-6"><button type="button" class="btn btn-outline-primary">Transfer</button></div>
-                                <div class="col-6 mt-5"><button type="button" class="btn btn-outline-primary">Withdraw</button></div>
+                            <div class="row mt-5" v-if="options === 1">
+                                <div class="col-6"><button type="button" class="btn btn-outline-primary" @click="depositvw">Deposit</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-outline-primary" @click="transfervw">Transfer</button></div>
+                                <div class="col-6 mt-5"><button type="button" class="btn btn-outline-primary" @click="withdrawvw">Withdraw</button></div>
                                 <div class="col-6 mt-5"></div>
                             </div>
-                            <div v-if="depovw === 1"><!--consign view-->
+                            <div v-if="depovw === 1"><!--deposit view-->
                                 <h5 class="card-title mt-4">Enter an amount:</h5>
-                                <input type="number" maxlength="4" class="form-control mb-2">
+                                <input @click="dinp" v-model.number="depos" type="number" class="form-control mb-2">
                             </div>
                             <div v-if="tfvw === 1"><!--transfer view-->
                                 <h5 class="card-title mt-3">Enter the destination account:</h5>
@@ -73,7 +73,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="1" class="text-center">Total cash in ATM:</td>
-                                        <td colspan="2" class="text-center ">0</td>
+                                        <td colspan="2" class="text-center " v-text="total">0</td>
                                     </tr>
                                 </tbody>
                                 <tbody v-else=>
@@ -102,7 +102,7 @@
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(4)">4</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(5)">5</button></div>
                                 <div class="col"><button type="button" class="btn btn-secondary" @click="buttons(6)">6</button></div>
-                                <div class="col"><button type="button" class="btn btn-warning" @click="buttons(12)"><i class="fas fa-angle-left"></i> CLEAR</button></div>
+                                <div class="col"><button type="button" class="btn btn-warning" @click="clear"><i class="fas fa-angle-left"></i> CLEAR</button></div>
                             </div>
                         </div>
                         <div class="container">
