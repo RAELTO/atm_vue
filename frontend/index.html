@@ -48,13 +48,13 @@
                             </div>
                             <div v-if="tfvw === 1"><!--transfer view-->
                                 <h5 class="card-title mt-3">Enter the destination account:</h5>
-                                <input type="text" maxlength="4" class="form-control mb-2">
+                                <input @click="trdestinp" v-model="daccountn" type="text" maxlength="4" class="form-control mb-2">
                                 <h5 class="card-title mt-3">Enter an amount:</h5>
-                                <input type="number" maxlength="4" class="form-control mb-2">
+                                <input @click="trinp" v-model="trf_amount" type="number" class="form-control mb-2">
                             </div>
                             <div v-if="wdrvw === 1"><!--withdraw view-->
                                 <h5 class="card-title mt-4">Enter an amount:</h5>
-                                <input type="number" maxlength="4" class="form-control mb-2">
+                                <input  @click="withdrinp" v-model="w_amount" type="number" class="form-control mb-2">
                             </div>
                         </div>
                         <div v-if="admvw === 1" class="mt-5"><!--admin view-->

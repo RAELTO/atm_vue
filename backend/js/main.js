@@ -18,16 +18,16 @@ var app = new Vue({
             {denom: 20000, amount: 50},
             {denom: 10000, amount: 50}
         ],
-        total:'',
+        total: '',
         pin: '',
         accountn: '',
         click_acc: false,
         click_pin: false,
         //login 
         disp_marq: 1, //display marquee
-        disp_pininp: 0,
-        disp_accinp: 1,
-        attempts: 3,
+        disp_pininp: 0,//display pin input
+        disp_accinp: 1,// display account input
+        attempts: 3,//it will block an account if the counter gets to zero
         //users view
         uservw: 0,
         options: 0,
@@ -35,13 +35,16 @@ var app = new Vue({
         tfvw: 0,
         wdrvw: 0,
         pos: 0,
-        click_depinp: false, //display deposit input
+        daccountn: '',
+        trf_amount: '',
+        w_amount: '',
+        click_depinp: false, //links the input with numerical buttons - deposit
         depos: '',
-        click_trinp: false,
-        click_trdest: false,
-        click_w: false,
+        click_trinp: false,//links the input with numerical buttons - transfer amount
+        click_trdest: false,//links the input with numerical buttons - destination account
+        click_w: false,//links the input with numerical buttons - withdrawals
         //adminview
-        admvw: 0,
+        admvw: 0,//shows the admin view where the total cash in atm is displayed 
     },
     methods: {
         buttons(n){
@@ -61,6 +64,22 @@ var app = new Vue({
                 this.depos += n;
             }else{
                 this.depos = this.depos;
+            }
+
+            if (this.click_trdest === true && this.daccountn.length <= 3) {
+                this.daccountn += n;
+            }else{
+                this.daccountn = this.daccountn;
+            }
+
+            if(this.click_trinp === true){
+                this.trf_amount += n;
+            }else{
+                this.trf_amount = this.trf_amount;
+            }
+
+            if(this.click_w === true) {
+                this.w_amount += n;
             }
 
         },
@@ -104,7 +123,7 @@ var app = new Vue({
         },
         cancel(){
             this.uservw = 0;
-            this.admvw = 0;
+            this.admvw = 1;//--
             this.disp_marq = 1;
             this.disp_accinp = 1;
             this.disp_pininp = 0;
@@ -115,6 +134,12 @@ var app = new Vue({
             this.depovw = 0;
             this.tfvw = 0;
             this.wdrvw = 0;
+            this.options = 0;
+            this.trf_amount = '';
+            this.w_amount = '';
+            this.daccountn = '';
+            this.click_trdest = false;
+            this.click_trinp = false;
         },
         clear(){
             //with the same views restart the input values
@@ -127,6 +152,10 @@ var app = new Vue({
             }else if(this.click_depinp === true){
                 this.depos = '';
                 this.click_depinp = false;
+            }else if(this.click_trdest === true){
+                this.daccountn = '';
+            }else if(this.click_trinp === true){
+                this.trf_amount = '';
             }
         },
         enter(){
@@ -141,6 +170,7 @@ var app = new Vue({
                 this.accountn = this.accountn;
             }else{
                 alert("The account doesn't exists");
+                this.cancel();
             }
 
             if(this.pin === this.users[index].pin && this.accountn === this.users[index].accountn && this.pin.length > 0){
@@ -159,7 +189,28 @@ var app = new Vue({
                     this.pos = index;
                     
                     if (this.depovw === 1 && this.depos.length > 0) {
+                        this.uservw = 0;
+                        this.options = 0;
                         this.deposit();
+                        this.cancel();
+                    }
+                    
+                    if(this.tfvw === 1 && this.daccountn.length > 0 && this.trf_amount.length > 0 && this.trf_amount <= this.users[index].balance) {
+                        this.uservw = 0;
+                        this.options = 0;
+                        this.transfer();
+                        this.cancel();
+                    }else if(parseInt(this.trf_amount) > this.users[index].balance){
+                        alert('Insufficient funds');
+                        this.cancel();
+                    }
+
+                    if(this.wdrvw === 1 && parseInt(this.w_amount) <= this.users[index].balance && parseInt(this.w_amount) > 0) {
+                        this.withdraw();
+                        this.cancel();
+                    }else if(parseInt(this.w_amount) > this.users[index].balance){
+                        alert('Insufficient funds');
+                        this.cancel();
                     }
 
                 }
@@ -196,10 +247,29 @@ var app = new Vue({
             this.cancel();
         },
         transfer(){
+            const destination = this.users.findIndex((object) => {
+                return object.accountn == this.daccountn;
+            });
 
+            if (destination != -1) {
+                if(this.daccountn === this.users[this.pos].accountn){
+                    alert('The destination account cannot be your own account');
+                    this.cancel();
+                }else{
+                    this.users[this.pos].balance -= parseInt(this.trf_amount);
+                    this.users[destination].balance += parseInt(this.trf_amount);
+                    alert(`$ ${this.trf_amount} were successfully send to the account ${this.daccountn}`);
+                }
+            }else{
+                alert('The destination account does not exist');
+            }
+            
         },
         withdraw(){
-
+            this.users[this.pos].balance -= parseInt(this.w_amount);
+            this.total -= parseInt(this.w_amount);
+            alert('Successful withdrawal');
+            this.cancel();
         },
 
     },
