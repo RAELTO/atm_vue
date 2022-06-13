@@ -123,7 +123,7 @@ var app = new Vue({
         },
         cancel(){
             this.uservw = 0;
-            this.admvw = 1;//--
+            this.admvw = 0;
             this.disp_marq = 1;
             this.disp_accinp = 1;
             this.disp_pininp = 0;
