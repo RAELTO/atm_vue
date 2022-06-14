@@ -4,16 +4,16 @@ var app = new Vue({
     el: '#app',
     data: {
         users: [
+            {accountn: '3333', pin: '3333', balance: 0, status: 1},//admin
             {accountn: '1234', pin: '1234', balance: 600000, status: true},
             {accountn: '5678', pin: '5678', balance: 1000000, status: true},
-            {accountn: '9012', pin: '9012', balance: 1400000, status: true},
+            {accountn: '9012', pin: '9012', balance: 14000000, status: true},
             {accountn: '3456', pin: '3456', balance: 850000, status: false},
         ],
         admin: [
             {accountn: '3333', pin: '3333', balance: 0, status: 1},//admin
         ],
         tcash: [
-            {denom: 100000, amount: 50},
             {denom: 50000, amount: 50},
             {denom: 20000, amount: 50},
             {denom: 10000, amount: 50}
@@ -44,7 +44,7 @@ var app = new Vue({
         click_trdest: false,//links the input with numerical buttons - destination account
         click_w: false,//links the input with numerical buttons - withdrawals
         //adminview
-        admvw: 0,//shows the admin view where the total cash in atm is displayed 
+        admvw: 0,//change it to zero value to hide the admin view or to 1 to display the admin view
     },
     methods: {
         buttons(n){
@@ -123,7 +123,7 @@ var app = new Vue({
         },
         cancel(){
             this.uservw = 0;
-            this.admvw = 0;
+            this.admvw = 0;//change it to zero value to hide the admmin view or to 1 to display the admmin view
             this.disp_marq = 1;
             this.disp_accinp = 1;
             this.disp_pininp = 0;
@@ -140,6 +140,7 @@ var app = new Vue({
             this.daccountn = '';
             this.click_trdest = false;
             this.click_trinp = false;
+            this.click_w = false;
         },
         clear(){
             //with the same views restart the input values
@@ -156,6 +157,8 @@ var app = new Vue({
                 this.daccountn = '';
             }else if(this.click_trinp === true){
                 this.trf_amount = '';
+            }else if(this.click_w === true){
+                this.w_amount = '';
             }
         },
         enter(){
@@ -168,12 +171,16 @@ var app = new Vue({
                 this.disp_pininp = 1;
                 this.disp_accinp = 0;
                 this.accountn = this.accountn;
-            }else{
+            }else if(index === -1){
                 alert("The account doesn't exists");
                 this.cancel();
             }
 
             if(this.pin === this.users[index].pin && this.accountn === this.users[index].accountn && this.pin.length > 0){
+
+                if(this.users[index].pin === this.users[0].pin && this.users[index].accountn === this.users[0].accountn){
+                    this.admvw = 1;
+                }
 
                 if (this.users[index].status === false) {
                     alert('Your account is blocked');
@@ -205,10 +212,11 @@ var app = new Vue({
                         this.cancel();
                     }
 
-                    if(this.wdrvw === 1 && parseInt(this.w_amount) <= this.users[index].balance && parseInt(this.w_amount) > 0) {
+                    if(this.wdrvw === 1 && parseInt(this.w_amount) <= this.users[index].balance && parseInt(this.w_amount) > 0 && parseInt(this.w_amount) <= this.total) {
+                        this.w_amount = parseInt(this.w_amount);
                         this.withdraw();
                         this.cancel();
-                    }else if(parseInt(this.w_amount) > this.users[index].balance){
+                    }else if(parseInt(this.w_amount) > this.users[index].balance || parseInt(this.w_amount) > this.total){
                         alert('Insufficient funds');
                         this.cancel();
                     }
@@ -242,6 +250,7 @@ var app = new Vue({
         deposit(){
             this.users[this.pos].balance +=  parseInt(this.depos);
             alert(`$${this.depos} were successfully deposited into you account`);
+            alert(`Your balances is: ${this.users[this.pos].balance}`);
             this.depos = '';
             this.click_depinp = false;
             this.cancel();
@@ -259,6 +268,7 @@ var app = new Vue({
                     this.users[this.pos].balance -= parseInt(this.trf_amount);
                     this.users[destination].balance += parseInt(this.trf_amount);
                     alert(`$ ${this.trf_amount} were successfully send to the account ${this.daccountn}`);
+                    alert(`Your balances is: ${this.users[this.pos].balance}`);
                 }
             }else{
                 alert('The destination account does not exist');
@@ -266,10 +276,57 @@ var app = new Vue({
             
         },
         withdraw(){
-            this.users[this.pos].balance -= parseInt(this.w_amount);
-            this.total -= parseInt(this.w_amount);
-            alert('Successful withdrawal');
-            this.cancel();
+
+            this.users[this.pos].balance -= this.w_amount;
+
+            let b50 = 0;
+            let b20 = 0;
+            let b10 = 0;
+
+            if(parseInt(this.total) - this.w_amount <= 0){
+            total = 0;
+            }
+            if(this.w_amount <= parseInt(this.total)){
+                b50 = Math.trunc(this.w_amount/50000);
+                this.w_amount = this.w_amount % 50000;
+                if(b50 >= this.tcash[0].amount){
+                    this.w_amount += (b50-this.tcash[0].amount)*50000;
+                    b50 = this.tcash[0].amount;
+                }
+                b20 = Math.trunc(this.w_amount/20000);
+                this.w_amount = this.w_amount % 20000;
+                
+                if(b20 >= this.tcash[1].amount){
+                    this.w_amount += (b20 - this.tcash[1].amount)*20000;
+                    b20 = this.tcash[1].amount
+                }
+
+                b10 = Math.trunc(this.w_amount/10000);
+                this.w_amount = this.w_amount % 10000;
+                console.log(b10);
+                console.log(this.w_amount);
+                if(b10 >= this.tcash[2].amount){
+                    this.w_amount += (b10 - this.tcash[2].amount)*10000;
+                    b10 = this.tcash[2].amount
+                    console.log(b10);
+                    console.log(this.w_amount);
+                }
+
+                if(this.w_amount === 0){
+                    this.tcash[0].amount -= b50;
+                    this.tcash[1].amount -= b20;
+                    this.tcash[2].amount -= b10;
+                    this.total = this.tcash.map(item => item.denom * item.amount).reduce((a, b) => a + b, 0);
+                    alert(`Successfull withdrawal, you have received: 50.000 bill (${b50}), 20.000 bill (${b20}), 10.000 bill (${b10})`);
+                    alert(`Your balances is: ${this.users[this.pos].balance}`);
+                    this.cancel();
+                }else{
+                    alert("Invalid amount");
+                    this.cancel();
+                }
+            
+            }
+
         },
 
     },
