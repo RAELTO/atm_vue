@@ -277,8 +277,6 @@ var app = new Vue({
         },
         withdraw(){
 
-            this.users[this.pos].balance -= this.w_amount;
-
             let b50 = 0;
             let b20 = 0;
             let b10 = 0;
@@ -317,6 +315,7 @@ var app = new Vue({
                     this.tcash[1].amount -= b20;
                     this.tcash[2].amount -= b10;
                     this.total = this.tcash.map(item => item.denom * item.amount).reduce((a, b) => a + b, 0);
+                    this.users[this.pos].balance -= (b50*50000+b20*20000+b10*10000);
                     alert(`Successfull withdrawal, you have received: 50.000 bill (${b50}), 20.000 bill (${b20}), 10.000 bill (${b10})`);
                     alert(`Your balances is: ${this.users[this.pos].balance}`);
                     this.cancel();
